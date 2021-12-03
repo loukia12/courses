@@ -1,66 +1,284 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# API Resources
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### 1. (GET) api/courses
 
-## About Laravel
+Returns a list with all courses and their data
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Responses**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+200:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```pythonb
+{
+    "status": 200,
+    "message": "Courses fetched successfully",
+    "errors": null,
+    "data": [
+        {
+            "id": 1,
+            "title": "Ux Fundementals 2",
+            "description": "Course for the second semester",
+            "created_at": null,
+            "updated_at": "2021-12-02T00:14:12.000000Z"
+        },
+        {
+            "id": 9,
+            "title": "UX",
+            "description": "Sixth Semester",
+            "created_at": "2021-12-01T23:40:30.000000Z",
+            "updated_at": "2021-12-02T22:52:43.000000Z"
+        }
+}
+```
 
-## Learning Laravel
+500:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```pythonb
+{
+    "status": 500,
+    "message": "Internal Server Error",
+    "data": null
+}
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### 2. (GET) api/courses/{course_id}
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+_Returns the data of a specific course_
 
-### Premium Partners
+**Parameters**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+```bash
+course_id | Required - Integer
+```
 
-## Contributing
+**Responses**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+200:
 
-## Code of Conduct
+```pythonb
+{
+    "status": 200,
+    "message": "Course with id 19 fetched successfully",
+    "errors": null,
+    "data": {
+        "id": 19,
+        "title": "Learning Machine",
+        "description": "Sixth semester",
+        "created_at": "2021-12-02T22:35:29.000000Z",
+        "updated_at": null
+    }
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+404:
 
-## Security Vulnerabilities
+```pythonb
+{
+    "status": 404,
+    "message": "Course with id 2 does not exist",
+    "data": null
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+400:
 
-## License
+```pythonb
+{
+    "status": 400,
+    "message": "Validation Error",
+    "errors": {
+        "id": [
+            "validation.integer"
+        ]
+    },
+    "data": null
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+500:
+
+```pythonb
+{
+    "status": 500,
+    "message": "Internal Server Error",
+    "data": null
+}
+```
+
+---
+
+### 3. (POST) api/courses
+
+_Creates a new course with the given data_
+
+**Post Payload**
+
+```bash
+title        | Required - String - Max Length:100
+description  | String - Max Length:255
+```
+
+**Responses**
+
+200:
+
+```pythonb
+{
+    "status": 201,
+    "message": "New course successfully created",
+    "errors": null
+}
+```
+
+400:
+
+```pythonb
+"status": 400,
+    "message": "Validation Error",
+    "errors": {
+        "title": [
+            "validation.required"
+        ]
+    },
+    "data": null
+```
+
+500:
+
+```pythonb
+{
+    "status": 500,
+    "message": "Internal Server Error",
+    "data": null
+}
+```
+
+---
+
+### 4. (PUT) api/courses/{course_id}
+
+_Updates an existed course with the given data_
+
+**Parameters**
+
+```bash
+course_id | Required - Integer
+```
+
+**Put Payload**
+
+```bash
+title        | String - Max Length:100
+description  | String - Max Length:255
+```
+
+**Responses**
+
+200:
+
+```pythonb
+{
+    "status": 200,
+    "message": "Course with id: 9 successfully updated",
+    "errors": null
+}
+```
+
+400:
+
+```pythonb
+{
+    "status": 400,
+    "message": "Validation Error",
+    "errors": {
+        "title": [
+            "validation.max.string"
+        ]
+    },
+    "data": null
+}
+```
+
+404:
+
+```pythonb
+{
+    "status": 404,
+    "message": "Course with id 2 does not exist",
+    "data": null
+}
+```
+
+500:
+
+```pythonb
+{
+    "status": 500,
+    "message": "Internal Server Error",
+    "data": null
+}
+```
+
+---
+
+### 5. (DELETE) api/courses/{course_id}
+
+_Deletes an existed course_
+
+**Parameters**
+
+```bash
+course_id | Required - Integer
+```
+
+**Responses**
+
+200:
+
+```pythonb
+{
+    "status": 200,
+    "message": "Successful",
+    "errors": null,
+    "data": "Course with id: 22 successfully deleted"
+}
+```
+
+400:
+
+```pythonb
+{
+    "status": 400,
+    "message": "Validation Error",
+    "errors": {
+        "id": [
+            "validation.integer"
+        ]
+    },
+    "data": null
+}
+```
+
+404:
+
+```pythonb
+{
+    "status": 404,
+    "message": "Course with id 22 does not exist",
+    "data": null
+}
+```
+
+500:
+
+```pythonb
+{
+    "status": 500,
+    "message": "Internal Server Error",
+    "data": null
+}
+```
+
+---

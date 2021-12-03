@@ -70,13 +70,32 @@ class ResponseRepository
      * @param integer $status_code
      * @return Response
      */
-    public static function ResponseSuccess($data = null, $message = "Successful", $status_code = JsonResponse::HTTP_OK)
+    public static function ResponseSuccessWithData($data = null, $message = "Successful", $status_code = JsonResponse::HTTP_OK)
     {
         return response()->json([
             'status'  => $status_code,
             'message' => $message,
             'errors'  => null,
             'data'    => $data,
+        ], $status_code);
+    }
+
+
+    /**
+     * Successful Response - 200
+     *
+     * Returns the success data and message if there is any error
+     *
+     * @param string $message
+     * @param integer $status_code
+     * @return Response
+     */
+    public static function ResponseSuccessWithoutData($message = "Successful", $status_code = JsonResponse::HTTP_OK)
+    {
+        return response()->json([
+            'status'  => $status_code,
+            'message' => $message,
+            'errors'  => null,
         ], $status_code);
     }
 

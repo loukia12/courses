@@ -16,7 +16,7 @@ class CoursesController extends Controller
     /**
      * @OA\Get(
      *     path="/courses",
-     *     @OA\Response(response="200", description="Display a listing of courses.")
+     *     @OA\Response(response="200", description="Display a listing of projects.")
      * )
      */
 
@@ -34,7 +34,7 @@ class CoursesController extends Controller
             return $response;
         }
 
-        $response = responseRepository::ResponseSuccess($courses_data, 'Courses fetched successfully');
+        $response = responseRepository::ResponseSuccessWithData($courses_data, 'Courses fetched successfully');
 
         return $response;
     }
@@ -67,7 +67,7 @@ class CoursesController extends Controller
             return $response;
         }
 
-        $response = responseRepository::ResponseSuccess($course_data, 'Course with id ' . $course_id . ' fetched successfully');
+        $response = responseRepository::ResponseSuccessWithData($course_data, 'Course with id ' . $course_id . ' fetched successfully');
         return $response;
     }
 
@@ -142,7 +142,7 @@ class CoursesController extends Controller
             return $e->getMessage();
         }
 
-        $response = responseRepository::ResponseSuccess('Course with id: ' . $course_id . ' successfully updated');
+        $response = responseRepository::ResponseSuccessWithoutData('Course with id: ' . $course_id . ' successfully updated');
         return $response;
     }
 
@@ -179,7 +179,7 @@ class CoursesController extends Controller
         }
 
 
-        $response = responseRepository::ResponseSuccess('Course with id: ' . $course_id . ' successfully deleted');
+        $response = responseRepository::ResponseSuccessWithoutData('Course with id: ' . $course_id . ' successfully deleted');
         return $response;
     }
 }
