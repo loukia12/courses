@@ -1,0 +1,21 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Courses API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/courses": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Display a listing of courses."
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
